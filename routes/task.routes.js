@@ -1,10 +1,11 @@
 const router = require('express').Router();
 
 const {getTask, getTasks, postTask, putTask, deleteTask} = require('../controllers/task.controller');
+const validarJWT = require('../midelware/validarJwt');
 
-router.get('/task', getTask);
+router.get('/task',validarJWT,  getTask);
 
-router.post('/task', postTask);
+router.post('/task', validarJWT, postTask);
 
 router.put('/task/:id', putTask);
 

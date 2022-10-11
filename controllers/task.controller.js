@@ -1,47 +1,66 @@
-const Ctrl = {};
-const task = require('../models/task')
+const Task = require('../models/tasks.models');
+const ctrl = {};
 
-Ctrl.getTask = async (req, res)=>{
-    const tasks = await task.find();
+ctrl.getTask = async (req, res) => {
 
-    res.render('index', {tasks});
+    try {
+        const uid = req.user._id;
+
+        if (!uid) {
+            res.status(400)({
+                msg: 'No ID received'
+            })
+        }
+
+        const getTask = await Task.find({ userId: uid })
+
+        res.json(getTask);
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            msg: 'An error has ocurred'
+        })
+    }
 }
 
-Ctrl.postTask = async (req, res)=>{
-    const {materia, tarea, entrega} = req.body;
 
-    const newTask = new task({
-        materia,
-        tarea,
-        entrega
-    })
+ctrl.postTask = async (req, res) => {
 
-    await newTask.save();
-    
-    res.json();
-    /* res.redirect('./task'); */
-}
+    try {
+        const { title, description } = req.body;
+        const uid = req.user._id;
 
-Ctrl.putTask = async (req, res)=>{
-    const id = req.params.id
-    const {materia, tarea, entrega} = req.body;
+        if (!uid) {
+            res.status(400)({
+                msg: 'No ID received'
+            })
+        }
 
-    await task.updateOne({_id: id},
-        {$set: {
-            materia,
-            tarea,
-            entrega }
+        if (!title && !description) {
+            res.status(400).json({
+                msg: 'Fill the fields'
+            })
+        }
+
+        const newTask = new Task({
+            title, description, userId: uid
+        })
+
+        await newTask.save();
+
+        res.json({
+            msg: 'Task created'
         });
 
-    res.status(200).json();
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({
+            msg: 'Error to created task'
+        })
+    }
+
+
 }
 
-Ctrl.deleteTask = async (req, res)=>{
-    const id = req.params.id;
-
-    await task.deleteOne({_id: id});
-
-    res.status(200).json();
-}
-
-module.exports = Ctrl;
+module.exports = ctrl;

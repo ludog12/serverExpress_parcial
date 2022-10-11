@@ -66,7 +66,12 @@ ctrl.login = async (req, res)=>{
         }
 
 
-       // const token=
+        const token = await generarJWT({uid: user._id})
+     
+        res.json({
+            msg: 'Successful login',
+            token
+        })
 
    } catch (error) {
         console.log(error)
