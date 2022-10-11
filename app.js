@@ -1,23 +1,22 @@
+//Importar dependencias
 const express = require('express');
-const path = require('path');
 const morgan = require('morgan');
-require('dotenv').config();
-require('./database/conection');
-require("ejs");
+const cors = require('cors');
+const connectDB = require('./src/database/connection');
+require('dotenv').config()
 
 const app = express();
 
+//middlewares
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(express.urlencoded({extended: false}));
+app.use(cors());
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs');
-
-app.use(require('./routes/user.routes'));
-app.use(require('./routes/task.routes'));
-app.use(require('./routes/edit.routes'));
+//Rutas
+app.use(require('./src/routes/task.routes'));
+app.use(require('./src/routes/user.routes'));
 
 
-const port = 4000;
+//PUERTO
+const port = 3000;
 app.listen(port, ()=>{console.log(`Servidor corriendo en el puerto ${port}`)})

@@ -1,4 +1,4 @@
-const Task = require('../models/tasks.models');
+const Task = require('../models/task');
 const ctrl = {};
 
 ctrl.getTask = async (req, res) => {

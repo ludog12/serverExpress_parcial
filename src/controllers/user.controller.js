@@ -1,9 +1,7 @@
 
 const user = require('../models/user')
 const Ctrl = {}
-const bcrypt= require('bcryot');
-const ctrl = require('./edit.controller');
-const user = require('../models/user');
+const bcrypt= require('bcrypt');
 const e = require('express');
 Ctrl.getUser = async (req, res)=>{
     const users = await user.find();
@@ -11,7 +9,7 @@ Ctrl.getUser = async (req, res)=>{
     res.json(users);   
 }
 
-Ctrl.register = async (req, res)=>{
+Ctrl.registerUser = async (req, res)=>{
     
     try {
         const {username, email, password} = req.body;
@@ -46,7 +44,7 @@ Ctrl.register = async (req, res)=>{
     
 }
 
-ctrl.login = async (req, res)=>{
+Ctrl.loginUser = async (req, res)=>{
     try {
         const {username, password }=req.body
         const user = await user.findOne({username});
@@ -80,4 +78,4 @@ ctrl.login = async (req, res)=>{
         })
     }
 }
-module.exports=ctrl;
+module.exports=Ctrl;

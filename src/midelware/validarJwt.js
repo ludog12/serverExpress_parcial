@@ -1,4 +1,5 @@
-const jwt= require(jsonwebtoken);
+
+const jwt= require("jsonwebtoken");
 const validarJWT= async(res, req, next)=>{
     const token = req.header.token;
 
