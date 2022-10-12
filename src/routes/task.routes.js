@@ -8,8 +8,5 @@ router.get('/task',validarJWT,  getTask);
 
 router.post('/task', validarJWT, postTask);
 
-// router.put('/task/:id');
-
-// router.delete('/task/:id', deleteTask);
 
 module.exports = router;    

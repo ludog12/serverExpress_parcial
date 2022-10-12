@@ -1,5 +1,5 @@
-const mongoose = require ("mongoose");
-
-const connectDB=()=> mongoose.connect("mongodb+srv://LudmilaGonzalez:123456ild@cluster0.qxkppqm.mongodb.net/?retryWrites=true&w=majority")
-
-module.exportsS= connectDB
+const mongoose = require("mongoose")
+const connection = () => {
+    mongoose.connect(process.env.URI_MONGODB).then(()=>console.log("Base de Datos conectada :)")).catch(err => console.log(err))
+}
+module.exports = connection

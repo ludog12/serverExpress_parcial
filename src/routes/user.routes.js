@@ -9,7 +9,6 @@ router.post('/login', loginUser)
 router.post('/register',registerUser);
 
 
-//router.delete('/user/delete', deleteUser);
 
 
 module.exports = router;

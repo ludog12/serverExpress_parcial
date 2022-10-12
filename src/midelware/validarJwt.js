@@ -1,6 +1,5 @@
-
 const jwt= require("jsonwebtoken");
-const validarJWT= async(res, req, next)=>{
+const validarJWT= async(req, res, next)=>{
     const token = req.header.token;
 
     if(!token){
@@ -15,9 +14,10 @@ const validarJWT= async(res, req, next)=>{
         req.status(400).json({
             msg:'No se encontró usuario'
         })
+        next()
     } catch (error) {
        console.log(error)
-       req.status(400).json({
+       res.status(400).json({
         msg:'Error de autenticación'
     })
     }

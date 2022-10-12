@@ -1,4 +1,3 @@
-
 const user = require('../models/user')
 const Ctrl = {}
 const bcrypt= require('bcrypt');
@@ -10,38 +9,34 @@ Ctrl.getUser = async (req, res)=>{
 }
 
 Ctrl.registerUser = async (req, res)=>{
-    
     try {
-        const {username, email, password} = req.body;
+        const { username, email, password } = req.body
+
         if(!username&&!email&&!password){
-            res.status(404).json({
-                msg:'Try again'
+            res.status(400).json({
+                msg: 'Try again'
             })
         }
 
-        const newPassword= bcrypt.hashSync(password,10)
+        const newPassword = bcrypt.hashSync(password, 10);
 
-        
+        const newUser = new User({
+            username, email, password: newPassword
+        });
 
-        res.json(newPassword)
+        await newUser.save();
 
-        const newUser = new user({
-            username,
-            email,
-            password: newPassword
-        })
-
-        const saveUser = await newUser.save()
-
-        res.json(saveUser);
         res.json({
-            msj:'Usser created'
+            msg: 'User created'
         })
-        
+
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        res.status(400).json({
+            msg: ''
+        })
     }
-    
+
 }
 
 Ctrl.loginUser = async (req, res)=>{
@@ -65,13 +60,13 @@ Ctrl.loginUser = async (req, res)=>{
 
 
         const token = await generarJWT({uid: user._id})
-     
+
         res.json({
             msg: 'Successful login',
             token
         })
 
-   } catch (error) {
+    } catch (error) {
         console.log(error)
         res.status(400).json({
             msg:'Error al iniciar sesión'
