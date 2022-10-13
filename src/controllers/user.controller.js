@@ -9,6 +9,7 @@ Ctrl.getUser = async (req, res)=>{
     res.json(users);   
 }
 
+
 Ctrl.registerUser = async (req, res)=>{
     try {
         const { username, email, password } = req.body
@@ -20,7 +21,6 @@ Ctrl.registerUser = async (req, res)=>{
         }
 
         const newPassword = bcrypt.hashSync(password, 10);
-
         const newUser = new User({
             username, email, password: newPassword
         });

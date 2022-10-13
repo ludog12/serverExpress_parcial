@@ -11,13 +11,14 @@ Ctrl.loginUser = async (req, res)=>{
         const user = await User.findOne({username});
 
         if (!user){
-            res.status(404).json({
+            res.status(400).json({
+                ok:false,
                 msg:'no user found'
             })
         } 
 
         const passwordIsValid= bcrypt.compareSync(password, user.password)
-        res.json(passwordIsValid)
+        
         
         if(!passwordIsValid){
             res.status(400).json({
@@ -28,12 +29,11 @@ Ctrl.loginUser = async (req, res)=>{
 
         const token = await generarJWt({uid: user._id})
 
-        res.json({
-            msg: 'Successful login',
-        })
+        return res.json({token})
+
     } catch (error) {
         console.log(error)
-        res.status(400).json({
+        res.status(500).json({
             msg:'Error al iniciar sesión'
         })
     }

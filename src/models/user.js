@@ -9,15 +9,14 @@ const newUser = new Schema({
     email:  {
         type:String,
         require:true
-
 },
     password: {
         type:String,
         require:true,
 }, 
-isActive:{
-    type: Boolean,
-    default: true
+    isActive:{
+        type: Boolean,
+        default: true
 }
 }, {versionKey: false, timestamps:true})
 

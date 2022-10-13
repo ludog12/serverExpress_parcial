@@ -5,10 +5,12 @@ const generarJWt= (uid)=>{
         jwt.sign(uid, process.env.SECRET,{
             expiresIn: 60*60
         }, (err, token)=>{
-            (err)?reject(err):resolve(token)
-        }
-
-        )
+            if (err){
+                reject(err)
+            }
+                
+            resolve(token)
+        })
     })
 }
 
