@@ -41,5 +41,24 @@ Ctrl.registerUser = async (req, res)=>{
 
 }
 
+Ctrl.updateUser= async (req,res)=>{
+    try {
+        console.log(1)
+        const userId=req.params.id
+        const {username, email, password} = req.body
+        const user = await User.findById(userId)
+        await User.findByIdAndUpdate(user._id, {username, email, password})
+        return res.status(200).json({
+            msg: "Se actualizo correctamente el usuario."
+        })
+    } catch (error) {
+        return res.json({
+            msg: `Se ha encontrado un ${error}`
+        })
+        
+    }
+}
+
+
 
 module.exports=Ctrl;

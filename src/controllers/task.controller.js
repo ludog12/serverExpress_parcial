@@ -1,4 +1,5 @@
 const Task = require('../models/task');
+const Ctrl = require('./user.controller');
 const ctrl = {};
 
 ctrl.getTask = async (req, res) => {
