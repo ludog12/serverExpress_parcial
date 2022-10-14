@@ -51,7 +51,8 @@ ctrl.postTask = async (req, res) => {
         await newTask.save();
 
         res.json({
-            msg: 'Task created'
+            msg: 'Task created',
+            id:uid
         });
 
     } catch (error) {
@@ -62,6 +63,37 @@ ctrl.postTask = async (req, res) => {
     }
 
 
+}
+
+ctrl.updateTask = async(req, res)=>{
+    try {
+        const {title, description} = req.body
+        const id = req.params.id
+        const updTask = await Task.findByIdAndUpdate(id, {title, description})
+        res.json({
+            msg:"Task updated",
+            updTask
+        })
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({
+            msg:"Cannot update task."
+        })
+    }
+}
+
+ctrl.deleteTask = async(req, res)=>{
+    const id = req.params.id
+
+    const delTask = await Task.findByIdAndUpdate(id, {isActive: false})
+
+    if(!delTask){
+        res.json("Cannot delete task")
+    }
+
+    res.json("Task deleted ")
 }
 
 module.exports = ctrl;
